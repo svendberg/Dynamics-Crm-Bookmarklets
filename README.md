@@ -1,4 +1,4 @@
-dcrm-entityfinder
+Dynamics CRM Entity Finder
 =================
 
 Proof of concept for filtering account grid by a comma seperated list of accountnumbers. 
