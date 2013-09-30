@@ -4,7 +4,7 @@ var EntityFinder = (function() {
 	var init = function()
 	{
 		queryBox.show();
-		grid = frames["contentIFrame"].document.getElementById("crmGrid").control;
+		grid = parent.frames["contentIFrame"].document.getElementById("crmGrid").control;
 	}
 
 	var queryBox = (function() {
