@@ -36,18 +36,15 @@ var EntityFinder = (function() {
 		}
 	})();
 
-	// Set new fetchxml to grid and refresh
 	var setFetchXml = function(fetchXml, grid) {
 		grid.SetParameter("fetchXml", fetchXml);
 		grid.refresh();
 	}
 
-	// comma seperated list of account numbers
 	var getFetchXml = function(entity, field, values)
 	{
 		var conditions = '';
 		var valueArray;
-		console.log(values.indexOf(','));
 		if(values.indexOf(',') != -1)
 		{
 			valueArray = values.split(',');
@@ -79,13 +76,18 @@ var EntityFinder = (function() {
 						'border:1px solid rgba(0, 0, 0, 0.2);' + 
 						'border-radius:6px;' + 
 						'padding:30px;' + 
-						'font-family:"Helvetica Neue", Helvetica, Arial, sans-serif"' + 
+						'font-family:Helvetica Neue, Helvetica, Arial, sans-serif;' + 
+						'color:#333333;' + 
+						'font-size:14px;' + 
 						'background-color:#ffffff;';
+						
+
 
 		this.input = 	'padding: 6px 12px;' +
 						'border: 1px solid #cccccc;' +
 						'border-radius: 4px;' + 
-						'width:100%;';
+						'width:100%;' +
+						'box-sizing:border-box;';
 
 		this.button =	'padding:6px 12px;' + 
 						'border:1px solid transparent;' +
@@ -104,7 +106,8 @@ var EntityFinder = (function() {
 	};
 
 	var markup = new function() {
-		this.box = 		'<div id="innerBox" style="' + styles.box + '">Field:<br /><input type="text" id="field" style="' + styles.input + '"></select><br /><br />Values: <br /><textarea rows="10" cols="50" id="searchString" style="' + styles.input + 
+		this.box = 		'<div id="innerBox" style="' + styles.box + '"><strong>Searchfield:</strong><br /><input type="text" id="field" style="' + styles.input + '"></select><br />' + 
+						'<br /><strong>Values:</strong><br /><textarea rows="10" cols="50" id="searchString" style="' + styles.input + 
 						'"></textarea><br /><button id="advancedFilterBtn" style="' + 
 						styles.button_b + '">Search</button>' +
 						'&nbsp;<button id="closeBtn" style="' + styles.button + '">Close</button></div>';;
