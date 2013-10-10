@@ -1,6 +1,22 @@
 <html>
+<head>
+<script type="text/javascript" src="entityfinder.js"></script> 
+</head>
+<script type="text/javascript">
+	function showBox()
+	{
+		var grid = {
+			refresh: function() {},
+			SetParameter: function() {},
+			get_entityTypeName: function() {}
+		}
+		console.log(grid);
+
+		EntityFinder.show(grid);
+	}
+</script>
 <body>
-	<button onclick="EntityFinder.init()">Click</button>
-	<script type="text/javascript" src="entityfinder.js"></script>
+	<button onclick="showBox()">Click</button>
+	
 </body>
 </html>
