@@ -107,5 +107,5 @@ var EntityFinder = (function() {
 })();
 
 
-grid = parent.frames["contentIFrame"].document.getElementById("crmGrid").control;
+grid = parent.frames.contentIFrame.document.getElementById("crmGrid").control;
 EntityFinder.show(grid);
