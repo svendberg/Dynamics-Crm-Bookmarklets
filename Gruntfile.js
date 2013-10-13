@@ -5,7 +5,10 @@ module.exports = function(grunt) {
       all: ['src/**/*.js', 'test/**/*.js']
     },
     jasmine: {
-      src: 'test/**/*.js',
+      src: 'src/**/*.js',
+      options: {
+        specs: 'test/**/*.js'
+      }
     },
     uglify: {
       options: {
@@ -21,5 +24,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine'); 
 
-  grunt.registerTask('default', ['jshint', 'jasmine', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'jasmine']);
+  grunt.registerTask('build', ['jshint', 'jasmine', 'uglify']);
 };

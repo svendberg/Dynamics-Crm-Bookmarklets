@@ -7,7 +7,7 @@ var EntityFinder = (function() {
 		newDiv = document.createElement('div');
 		newDiv.innerHTML = markup.box;
 
-		document.firstElementChild.appendChild(newDiv);
+		document.body.appendChild(newDiv);
 		document.getElementById('closeBtn').onclick = function() {
 			hide();
 		};
