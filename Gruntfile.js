@@ -13,17 +13,18 @@ module.exports = function(grunt) {
     uglify: {
       options: {
       },
-      build: {
-        src: 'src/<%= pkg.name %>.js',
-        dest: 'build/<%= pkg.name %>.min.js'
-      }
+      my_target: {
+        files: {
+          'build/maileditor_ckeditor.js': ['src/maileditor_ckeditor.js'],
+          'build/entityfinder.js': ['src/entityfinder.js']
+        }
+    }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-jasmine'); 
 
-  grunt.registerTask('default', ['jshint', 'jasmine']);
-  grunt.registerTask('build', ['jshint', 'jasmine', 'uglify']);
+  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('build', ['jshint', 'uglify']);
 };
