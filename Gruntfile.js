@@ -16,7 +16,8 @@ module.exports = function(grunt) {
       my_target: {
         files: {
           'build/maileditor_ckeditor.js': ['src/maileditor_ckeditor.js'],
-          'build/entityfinder.js': ['src/entityfinder.js']
+          'build/entityfinder.js': ['src/entityfinder.js'],
+          'build/entityinfo.js': ['src/entityinfo.js']
         }
     }
     }
