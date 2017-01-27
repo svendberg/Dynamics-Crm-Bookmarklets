@@ -14,7 +14,6 @@ var BrReg = (function () {
         var field = document.getElementById('field');
         field.onkeyup = debounce(function () {
             var query = document.getElementById('field').value;
-            console.log(query);
             ajax.get(remote, { query: query }, function (result) {
                 var list = document.getElementById('results');
                 if (result && result.entries && result.entries.length > 0) {
@@ -44,7 +43,6 @@ var BrReg = (function () {
     };
 
     var sendToCrm = function (item) {
-        console.log("test");
         Xrm.Page.getAttribute("name").setValue(item.navn);
         Xrm.Page.getAttribute("telephone1").setValue(item.tlf);
         Xrm.Page.getAttribute("address1_line1").setValue(item.forretningsadr);
