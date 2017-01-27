@@ -1,8 +1,7 @@
 Dynamics CRM Bookmarklets
 =================
 
-The files in the build folder can be used in bookmarks directly. Just add "javascript:" in the front. 
-Example: javascript:alert("test");
+The files in the build folder can be used in bookmarks directly.
 
 <b>Entityinfo</b>
 Shows an alert box with the entity id and entity name when clicked. 

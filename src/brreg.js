@@ -1,8 +1,7 @@
 /*exported BrReg */
 var BrReg = (function () {
-    'use strict';
     var newDiv;
-    var container;
+    var Xrm = frames[0].Xrm;
     var init = function () {
         newDiv = document.createElement('div');
         newDiv.innerHTML = markup.box;
@@ -18,18 +17,20 @@ var BrReg = (function () {
             console.log(query);
             ajax.get(remote, { query: query }, function (result) {
                 var list = document.getElementById('results');
-                BrReg.container = result;
-                console.log(result);
                 if (result && result.entries && result.entries.length > 0) {
                     result.entries.forEach(function (item) {
-                        console.log(item);
                         var newLi = document.createElement('li');
-                        newLi.innerHTML =  item.navn +
+                        newLi.id = item.orgnr;
+                        newLi.innerHTML = item.navn +
                             "<span style='color: #444'> (" + item.orgnr + ")</span>" +
                             "<br /><span>" +
                             (item.forretningsadr != '' ? item.forretningsadr + "<br />" : '') +
                             item.forradrpostnr + " " + item.forradrpoststed + "</span>";
                         list.appendChild(newLi);
+
+                        document.getElementById(item.orgnr).onclick = function() { 
+                            sendToCrm(item) 
+                        };
                     });
                 };
             });
@@ -40,6 +41,17 @@ var BrReg = (function () {
 
     var hide = function () {
         newDiv.parentNode.removeChild(newDiv);
+    };
+
+    var sendToCrm = function (item) {
+        console.log("test");
+        Xrm.Page.getAttribute("name").setValue(item.navn);
+        Xrm.Page.getAttribute("telephone1").setValue(item.tlf);
+        Xrm.Page.getAttribute("address1_line1").setValue(item.forretningsadr);
+        Xrm.Page.getAttribute("address1_city").setValue(item.forradrpoststed);
+        Xrm.Page.getAttribute("address1_postalcode").setValue(item.forradrpostnr);
+        Xrm.Page.getAttribute("accountnumber").setValue(item.orgnr);
+        hide();
     };
 
     var styles = function () {
@@ -81,12 +93,27 @@ var BrReg = (function () {
 
     var markup = function () {
         var obj = {};
-        obj.box = '<div id="innerBox" style="' + styles.box + '"><strong>Searchfield:</strong><br /><input type="text" id="field" style="' + styles.input + '"></select><br />' +
-            '<br /><strong>Values:</strong><br /><ul id="results"></ul><br /><button id="searchButton" style="' +
-            styles.button_b + '">Search</button>' +
-            '&nbsp;<button id="closeBtn" style="' + styles.button + '">Close</button></div>';
+        obj.box = '<div id="innerBox" style="' + styles.box + '"><strong>Firmanavn:</strong><br /><input type="text" id="field" style="' + styles.input + '"></select><br />' +
+            '<br /><br /><ul id="results"></ul><br />' +
+            '&nbsp;<button id="closeBtn" style="' + styles.button + '">Lukk</button></div>';
         return obj;
     } ();
+
+    var debounce = function (func, wait, immediate) {
+        var timeout;
+        return function () {
+            var context = this,
+                args = arguments;
+            var later = function () {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
 
     var ajax = {};
     ajax.x = function () {
@@ -111,22 +138,6 @@ var BrReg = (function () {
             }
         }
         return xhr;
-    };
-
-    var debounce = function (func, wait, immediate) {
-        var timeout;
-        return function () {
-            var context = this,
-                args = arguments;
-            var later = function () {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            var callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
     };
 
     ajax.send = function (url, callback, method, data, async) {
@@ -154,17 +165,8 @@ var BrReg = (function () {
         ajax.send(url + (query.length ? '?' + query.join('&') : ''), callback, 'GET', null, async)
     };
 
-    ajax.post = function (url, data, callback, async) {
-        var query = [];
-        for (var key in data) {
-            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-        }
-        ajax.send(url, callback, 'POST', query.join('&'), async)
-    };
-
     return {
         show: init,
-        container: container
     };
 })();
 
